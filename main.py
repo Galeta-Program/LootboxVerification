@@ -2,12 +2,14 @@
 # Player-side
 
 from lootbox import lootbox_function
-from commitment import commit_function
+from commitment import commit_function, verify_commitment
 from verification import verify_probability
 
 def main():
     commitment = commit_function(lootbox_function)
     print "Function Commitment:", commitment
+
+    assert verify_commitment(lootbox_function, commitment)
 
     verify_probability(100000)
 

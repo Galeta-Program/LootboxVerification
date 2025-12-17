@@ -1,17 +1,28 @@
 # -*- coding: utf-8 -*-
 # Verifier-side
 
-import math
+import math, hashlib
 from randomness import public_randomness_beacon
 from lootbox import lootbox_function, PUBLIC_PROBABILITY
+
+def verify_opening(rand_value, rarity, proof):
+    """
+    Verify π = H(x || y)
+    """
+    data = "{}|{}".format(rand_value, rarity)
+    expected = hashlib.sha256(data).hexdigest()
+    return expected == proof
 
 def run_trials(n):
     result = {"SSR": 0, "SR": 0, "R": 0}
 
     for i in range(n):
         rand = public_randomness_beacon(i)
-        rarity = lootbox_function(rand)
+        rarity, proof = lootbox_function(rand)
         result[rarity] += 1
+
+        if not verify_opening(rand, rarity, proof):
+            raise Exception("Invalid opening proof")
 
     return result
 

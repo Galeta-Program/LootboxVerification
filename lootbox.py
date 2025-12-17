@@ -18,12 +18,22 @@ _PROBABILITY = {
 def lootbox_function(rand_value):
     """
     轉蛋函數（商業機密）
+    f(x) → (y, π)
+    π = hash(x || y)
     """
     if rand_value < _PROBABILITY["SSR"]:
-        return "SSR"
+        rarity = "SSR"
     elif rand_value < _PROBABILITY["SSR"] + _PROBABILITY["SR"]:
-        return "SR"
+        rarity = "SR"
     else:
-        return "R"
+        rarity = "R"
+
+    proof = _generate_proof(rand_value, rarity)
+    return rarity, proof
+
+def _generate_proof(x, y):
+    import hashlib
+    data = "{}|{}".format(x, y)
+    return hashlib.sha256(data).hexdigest()
 
 __all__ = ["lootbox_function", "PUBLIC_PROBABILITY"]

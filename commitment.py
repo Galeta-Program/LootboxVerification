@@ -14,3 +14,9 @@ def commit_function(func):
     if isinstance(source, unicode):
         source = source.encode("utf-8")
     return hashlib.sha256(source).hexdigest()
+
+def verify_commitment(func, committed_c):
+    """
+    Verify that function has not changed
+    """
+    return commit_function(func) == committed_c
