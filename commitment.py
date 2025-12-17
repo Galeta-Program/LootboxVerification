@@ -20,3 +20,9 @@ def verify_commitment(func, committed_c):
     Verify that function has not changed
     """
     return commit_function(func) == committed_c
+
+def verify_hash_chain(last_hash, expected_hash):
+    """
+    Check H(expected_hash) == last_hash
+    """
+    return hashlib.sha256(expected_hash).hexdigest() == last_hash
