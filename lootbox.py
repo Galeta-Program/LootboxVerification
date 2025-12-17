@@ -10,8 +10,8 @@ PUBLIC_PROBABILITY = {
 
 # 遊戲實際使用機率
 _PROBABILITY = {
-    "SSR": 0.01,
-    "SR":  0.09,
+    "SSR": 0.02,
+    "SR":  0.08,
     "R":   0.90
 }
 
